@@ -36,6 +36,24 @@
         opacity: 0;
         transition: font-size 0.5s ease-in-out;
     }
+
+    @media (min-width: 768px) {
+        .thought {
+            font-size: 18px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .thought {
+            font-size: 24px;
+        }
+    }
+
+    @media (min-width: 1440px) {
+        .thought {
+            font-size: 32px;
+        }
+    }
 </style>
 <script>
     const thoughts = [
@@ -53,7 +71,6 @@
         thoughtElement.innerHTML = `<p>${text}</p>`;
         thoughtIndex = (thoughtIndex + 1) % thoughts.length; // Increment and loop back to 0 when reaching end
         return thoughtElement;
-        thoughtElement;
     }
 
     function increaseFontSize(text) {
@@ -95,20 +112,23 @@
     }
 
     function showFinalText() {
-        clearContainer();
-        const finalText = createThoughtElement("Can I do it well?");
-        finalText.style.fontSize = '100px';
-        finalText.style.opacity = '1';
-        finalText.style.position = 'absolute';
-        finalText.style.top = '50%';
-        finalText.style.left = '50%';
-        finalText.style.transform = 'translate(-50%, -50%)';
-        document.querySelector('.container').appendChild(finalText);
-        setTimeout(clearContainer, 2000);
-    }
+    clearContainer();
+    const finalText = createThoughtElement("Can I do it well?");
+    finalText.style.fontSize = '50px';
+    finalText.style.opacity = '1';
+    finalText.style.transform = 'translate(-50%, -50%)';
+    finalText.style.top = '50%';
+    finalText.style.left = '50%';
+    finalText.style.display = 'flex';
+    finalText.style.alignItems = 'center';
+    finalText.style.justifyContent = 'center';
+    document.querySelector('.container').appendChild(finalText);
+    setTimeout(clearContainer, 3000);
+}
+
 
     function loopTextEffect() {
-        const numberOfLoops = 500;
+        const numberOfLoops = 1;
         let loopCount = 0;
         const interval = setInterval(() => {
             appearAndGrowText();
@@ -121,7 +141,6 @@
     }
 
     loopTextEffect();
-
 
 </script>
 
