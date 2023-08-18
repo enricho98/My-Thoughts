@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Thoughts</title>
+</head>
+
+<body>
+    <div class="container">
+    </div>
+
+</body>
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: black;
+        color: white;
+    }
+
+    .container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+    }
+
+    .thought {
+        position: absolute;
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0;
+        transition: font-size 0.5s ease-in-out;
+    }
+</style>
+<script>
+    const thoughts = [
+        "Can i get through this?",
+        "Can I complain?",
+        "Is this the way of my life?",
+        "Is this the life I want?",
+        "Am I doing well?"
+    ];
+    let thoughtIndex = 0;
+
+    function createThoughtElement(text) {
+        const thoughtElement = document.createElement('div');
+        thoughtElement.classList.add('thought');
+        thoughtElement.innerHTML = `<p>${text}</p>`;
+        thoughtIndex = (thoughtIndex + 1) % thoughts.length; // Increment and loop back to 0 when reaching end
+        return thoughtElement;
+        thoughtElement;
+    }
+
+    function increaseFontSize(text) {
+        let fontSize = parseInt(getComputedStyle(text).fontSize);
+        fontSize += 10;
+        text.style.fontSize = `${fontSize}px`;
+    }
+
+    function getRandomPosition(max) {
+        return Math.floor(Math.random() * max);
+    }
+
+    function getRandomAngle() {
+        return Math.random() * 360;
+    }
+
+    function appearAndGrowText() {
+        const numberOfTexts = 1;
+        for (let i = 0; i < numberOfTexts; i++) {
+            const text = createThoughtElement(thoughts[thoughtIndex]);
+            document.querySelector('.container').appendChild(text);
+            const maxWidth = window.innerWidth - text.offsetWidth;
+            const maxHeight = window.innerHeight - text.offsetHeight;
+            const randomX = getRandomPosition(maxWidth);
+            const randomY = getRandomPosition(maxHeight);
+            const randomAngle = getRandomAngle();
+            text.style.left = `${randomX}px`;
+            text.style.top = `${randomY}px`;
+            text.style.transform = `rotate(${randomAngle}deg)`;
+            text.style.opacity = '1';
+
+            setInterval(() => increaseFontSize(text), 100);
+        }
+    }
+
+    function clearContainer() {
+        const container = document.querySelector('.container');
+        container.innerHTML = '';
+    }
+
+    function showFinalText() {
+        clearContainer();
+        const finalText = createThoughtElement("Can I do it well?");
+        finalText.style.fontSize = '100px';
+        finalText.style.opacity = '1';
+        finalText.style.position = 'absolute';
+        finalText.style.top = '50%';
+        finalText.style.left = '50%';
+        finalText.style.transform = 'translate(-50%, -50%)';
+        document.querySelector('.container').appendChild(finalText);
+        setTimeout(clearContainer, 2000);
+    }
+
+    function loopTextEffect() {
+        const numberOfLoops = 500;
+        let loopCount = 0;
+        const interval = setInterval(() => {
+            appearAndGrowText();
+            loopCount++;
+            if (loopCount >= numberOfLoops) {
+                clearInterval(interval);
+                showFinalText();
+            }
+        }, 10);
+    }
+
+    loopTextEffect();
+
+
+</script>
+
+</html>
